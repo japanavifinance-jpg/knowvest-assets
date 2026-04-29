@@ -1,0 +1,2 @@
+# knowvest-assets
+App assets
