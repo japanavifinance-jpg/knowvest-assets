@@ -1,0 +1,30 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="112" fill="#0a1a14"/>
+  <rect width="512" height="512" rx="112" fill="none" stroke="#1D9E75" stroke-width="2" opacity="0.35"/>
+
+  <!-- Subtle horizontal grid lines -->
+  <line x1="72" y1="340" x2="440" y2="340" stroke="#ffffff" stroke-width="1" opacity="0.05"/>
+  <line x1="72" y1="270" x2="440" y2="270" stroke="#ffffff" stroke-width="1" opacity="0.05"/>
+  <line x1="72" y1="200" x2="440" y2="200" stroke="#ffffff" stroke-width="1" opacity="0.05"/>
+
+  <!-- Teal glow area under chart -->
+  <polygon points="80,360 160,296 240,318 330,220 440,160 440,360" fill="#1D9E75" opacity="0.07"/>
+
+  <!-- Chart line -->
+  <polyline points="80,360 160,296 240,318 330,220 440,160"
+    fill="none" stroke="#1D9E75" stroke-width="22"
+    stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Light highlight on line -->
+  <polyline points="80,360 160,296 240,318 330,220 440,160"
+    fill="none" stroke="#5DCAA5" stroke-width="7"
+    stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/>
+
+  <!-- End dot -->
+  <circle cx="440" cy="160" r="20" fill="#1D9E75"/>
+  <circle cx="440" cy="160" r="10" fill="#9FE1CB"/>
+
+  <!-- ¥ mark -->
+  <text x="114" y="398" font-family="'Helvetica Neue',Arial,sans-serif" font-size="72" font-weight="800" fill="white" opacity="0.9">¥</text>
+  <circle cx="114" cy="360" r="8" fill="#1D9E75" opacity="0.6"/>
+</svg>
