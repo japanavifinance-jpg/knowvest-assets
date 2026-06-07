@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Knowvest — Understand Your NISA. Finally.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal: #1D9E75;
+  --teal-light: #25C492;
+  --teal-dim: rgba(29,158,117,0.15);
+  --teal-glow: rgba(29,158,117,0.07);
+  --amber: #F59E0B;
+  --purple: #5b3ff8;
+  --red-soft: #ef4444;
+  --bg: #0b0e14;
+  --bg-card: #111520;
+  --bg-card2: #161b27;
+  --bg-card3: #1a2033;
+  --border: rgba(255,255,255,0.07);
+  --border-teal: rgba(29,158,117,0.28);
+  --border-amber: rgba(245,158,11,0.25);
+  --border-purple: rgba(91,63,248,0.25);
+  --text-primary: #eef2f7;
+  --text-secondary: #8b95a8;
+  --text-tertiary: #445066;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 18px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(11,14,20,0.88);
+  backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 800;
+  font-size: 21px;
+  color: var(--text-primary);
+  letter-spacing: -0.4px;
+  text-decoration: none;
+}
+.nav-logo span { color: var(--teal); }
+
+.nav-right { display: flex; align-items: center; gap: 12px; }
+
+.nav-link {
+  font-size: 14px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-link:hover { color: var(--text-primary); }
+
+.nav-cta {
+  background: var(--teal);
+  color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  padding: 9px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.nav-cta:hover { background: var(--teal-light); transform: translateY(-1px); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 130px 24px 80px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.hero-glow {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 600px;
+  background: radial-gradient(ellipse at center, rgba(29,158,117,0.1) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-teal);
+  border-radius: 100px;
+  padding: 7px 16px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 28px;
+  opacity: 0;
+  animation: fadeUp 0.6s 0.1s ease forwards;
+}
+
+.eyebrow-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--teal);
+  animation: blink 2s infinite;
+}
+
+.hero-headline {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 800;
+  font-size: clamp(40px, 7.5vw, 76px);
+  line-height: 1.05;
+  letter-spacing: -2.5px;
+  margin-bottom: 12px;
+  opacity: 0;
+  animation: fadeUp 0.65s 0.25s ease forwards;
+}
+
+.hero-headline .line2 {
+  color: var(--teal);
+  display: block;
+}
+
+.hero-quote {
+  display: block;
+  font-size: clamp(26px, 4vw, 50px);
+  color: var(--text-secondary);
+  font-weight: 600;
+  letter-spacing: -1px;
+  line-height: 1.3;
+  margin-bottom: 2px;
+}
+
+.hero-quote::before { content: open-quote; color: var(--teal); opacity: 0.6; }
+.hero-quote::after  { content: close-quote; color: var(--teal); opacity: 0.6; }
+
+.hero-quote.line2 {
+  color: var(--teal);
+  font-size: clamp(28px, 4.5vw, 54px);
+  font-weight: 800;
+  margin-bottom: 0;
+}
+
+.hero-jp {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--text-tertiary);
+  letter-spacing: 0.05em;
+  margin-bottom: 28px;
+  opacity: 0;
+  animation: fadeUp 0.65s 0.35s ease forwards;
+}
+
+.hero-sub {
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  max-width: 540px;
+  margin: 0 auto 48px;
+  opacity: 0;
+  animation: fadeUp 0.65s 0.45s ease forwards;
+}
+
+.hero-cta-group {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 72px;
+  opacity: 0;
+  animation: fadeUp 0.65s 0.55s ease forwards;
+}
+
+.btn-primary {
+  background: var(--teal);
+  color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 15px 32px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-primary:hover { background: var(--teal-light); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(29,158,117,0.3); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  padding: 15px 24px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.btn-ghost:hover { border-color: var(--border-teal); color: var(--text-primary); }
+
+/* ── VIDEO ── */
+.video-wrap {
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.7s ease forwards;
+}
+
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--border-teal);
+  box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 80px rgba(29,158,117,0.08);
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: none;
+}
+
+.video-placeholder {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: var(--bg-card2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.video-play-icon {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: rgba(29,158,117,0.15);
+  border: 2px solid var(--border-teal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+
+.video-placeholder-text {
+  font-size: 15px;
+  color: var(--text-secondary);
+  font-weight: 300;
+}
+
+.video-placeholder-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--text-tertiary);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ── DIVIDER ── */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+
+/* ── SECTIONS ── */
+section { padding: 96px 24px; }
+
+.section-inner { max-width: 1080px; margin: 0 auto; }
+
+.eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 16px;
+}
+
+.section-headline {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 800;
+  font-size: clamp(28px, 4vw, 46px);
+  letter-spacing: -1.5px;
+  line-height: 1.08;
+  margin-bottom: 16px;
+}
+
+.section-sub {
+  font-size: 17px;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1.72;
+  max-width: 540px;
+}
+
+/* ── PROBLEM ── */
+.problem-section { background: linear-gradient(180deg, var(--bg) 0%, #0d1119 100%); }
+
+.problem-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+  margin-top: 60px;
+}
+
+.problem-list { display: flex; flex-direction: column; gap: 12px; }
+
+.problem-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 18px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  transition: all 0.25s;
+}
+.problem-item:hover { border-color: rgba(255,255,255,0.11); transform: translateX(4px); }
+
+.pi-icon { font-size: 22px; min-width: 32px; margin-top: 1px; }
+.pi-title { font-weight: 500; font-size: 14px; color: var(--text-primary); margin-bottom: 3px; }
+.pi-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.58; }
+
+.brokerage-mock {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
+  position: relative;
+}
+
+.brokerage-inner {
+  background: #f0f0f0;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.brow { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid #ddd; }
+.brow:last-child { border-bottom: none; }
+.brow-name { font-family: sans-serif; font-size: 11px; color: #111; font-weight: 600; }
+.brow-sub { font-family: sans-serif; font-size: 9px; color: #666; margin-top: 1px; }
+.brow-val { font-family: monospace; font-size: 12px; font-weight: 700; }
+.brow-val.up { color: #16a34a; }
+.brow-val.dn { color: #dc2626; }
+
+.confused-card {
+  background: rgba(239,68,68,0.08);
+  border: 1px solid rgba(239,68,68,0.2);
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 14px;
+  color: #fca5a5;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* ── FUND EXPLORER ── */
+.explorer-section { background: var(--bg); }
+
+.explorer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 72px;
+  align-items: center;
+  margin-top: 60px;
+}
+
+.step-list { display: flex; flex-direction: column; }
+
+.step-item {
+  display: flex;
+  gap: 18px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--border);
+}
+.step-item:last-child { border-bottom: none; }
+
+.step-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--teal);
+  background: var(--teal-dim);
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.step-title { font-weight: 600; font-size: 15px; color: var(--text-primary); margin-bottom: 4px; }
+.step-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.62; }
+
+/* phone mockup */
+.phone-wrap { position: relative; display: flex; justify-content: center; }
+
+.phone {
+  width: 272px;
+  background: #13182a;
+  border-radius: 36px;
+  border: 1px solid rgba(29,158,117,0.22);
+  overflow: hidden;
+  box-shadow: 0 48px 120px rgba(0,0,0,0.65), 0 0 80px rgba(29,158,117,0.08);
+  position: relative;
+}
+
+/* scan line animation */
+.phone::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--teal), transparent);
+  box-shadow: 0 0 12px var(--teal);
+  animation: scanLine 3s infinite;
+  z-index: 10;
+}
+
+.phone-inner { padding: 20px 16px; }
+
+.m-header {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--text-primary);
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 12px;
+}
+
+.m-disclaimer {
+  background: rgba(29,158,117,0.08);
+  border: 1px solid rgba(29,158,117,0.18);
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 9px;
+  color: var(--teal);
+  margin-bottom: 10px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.m-fund-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+}
+
+.m-fund-en { font-family: 'Bricolage Grotesque', sans-serif; font-size: 11px; font-weight: 700; color: var(--text-primary); margin-bottom: 2px; }
+.m-fund-jp { font-size: 9px; color: var(--text-secondary); margin-bottom: 6px; }
+
+.m-badges { display: flex; gap: 4px; flex-wrap: wrap; }
+.m-badge { font-size: 8px; padding: 2px 8px; border-radius: 20px; font-weight: 600; }
+.m-badge.teal { background: rgba(29,158,117,0.18); color: var(--teal); }
+.m-badge.amber { background: rgba(245,158,11,0.18); color: var(--amber); }
+
+.m-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin: 8px 0 4px;
+}
+
+.m-desc { font-size: 9px; color: var(--text-secondary); line-height: 1.55; margin-bottom: 8px; }
+
+.m-row { display: flex; justify-content: space-between; align-items: center; padding: 3px 0; }
+.m-row-label { font-size: 9px; color: var(--text-secondary); display: flex; align-items: center; gap: 4px; }
+.m-dot { width: 6px; height: 6px; border-radius: 50%; }
+.m-pct { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--teal); font-weight: 500; }
+
+.float-tag {
+  position: absolute;
+  background: var(--bg-card2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 9px 13px;
+  white-space: nowrap;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+.float-tag.tl { left: -90px; top: 22%; border-color: var(--border-teal); }
+.float-tag.br { right: -90px; top: 60%; border-color: var(--border-amber); }
+.ft-label { font-family: 'DM Mono', monospace; font-size: 9px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-tertiary); margin-bottom: 3px; }
+.ft-val { font-size: 13px; font-weight: 600; }
+.float-tag.tl .ft-val { color: var(--teal); }
+.float-tag.br .ft-val { color: var(--amber); }
+
+/* ── FEATURES ── */
+.features-section { background: linear-gradient(180deg, #0d1119 0%, var(--bg) 100%); }
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 60px;
+}
+
+.feat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 26px 22px;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.feat-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--teal), transparent);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.feat-card:hover { border-color: var(--border-teal); transform: translateY(-4px); }
+.feat-card:hover::after { opacity: 1; }
+
+.feat-icon { font-size: 26px; margin-bottom: 14px; display: block; }
+.feat-title { font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+.feat-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 14px; }
+
+.feat-tag {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  display: inline-block;
+  letter-spacing: 0.04em;
+}
+.feat-tag.free { background: rgba(29,158,117,0.14); color: var(--teal); }
+.feat-tag.standard { background: rgba(91,63,248,0.14); color: #9d8ffc; }
+.feat-tag.premium { background: rgba(245,158,11,0.12); color: var(--amber); }
+.feat-tag.soon { background: rgba(255,255,255,0.05); color: var(--text-tertiary); border: 1px solid var(--border); }
+
+/* ── LEARN TAB ── */
+.learn-section { background: var(--bg); }
+
+.learn-intro {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+  margin-top: 60px;
+  margin-bottom: 48px;
+}
+
+.learn-levels { display: flex; flex-direction: column; gap: 12px; }
+
+.level-card {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 18px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  transition: all 0.25s;
+}
+.level-card.active { border-color: var(--border-teal); background: rgba(29,158,117,0.04); }
+.level-card.locked { opacity: 0.55; }
+
+.level-pip {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.level-info { flex: 1; }
+.level-num { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 2px; }
+.level-name { font-family: 'Bricolage Grotesque', sans-serif; font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 2px; }
+.level-arc { font-size: 11px; color: var(--text-secondary); }
+
+.level-status {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.level-status.now { background: rgba(29,158,117,0.14); color: var(--teal); }
+.level-status.soon { background: rgba(255,255,255,0.05); color: var(--text-tertiary); border: 1px solid var(--border); }
+
+.learn-right { }
+.learn-right .section-headline { font-size: clamp(24px, 3vw, 36px); }
+
+.learn-cta-box {
+  margin-top: 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-teal);
+  border-radius: 14px;
+  padding: 20px 22px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.lcb-icon { font-size: 22px; flex-shrink: 0; }
+.lcb-title { font-weight: 600; font-size: 14px; color: var(--text-primary); margin-bottom: 4px; }
+.lcb-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.55; }
+
+/* lesson preview cards */
+.lesson-preview {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.lp-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  position: relative;
+}
+.lp-card.active { border-color: var(--border-teal); }
+.lp-card.locked-card { opacity: 0.45; }
+
+.lp-level { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 6px; }
+.lp-title { font-family: 'Bricolage Grotesque', sans-serif; font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; line-height: 1.3; }
+.lp-items { display: flex; flex-direction: column; gap: 4px; }
+.lp-item { font-size: 10px; color: var(--text-secondary); display: flex; gap: 5px; align-items: flex-start; line-height: 1.4; }
+.lp-item::before { content: '·'; color: var(--teal); flex-shrink: 0; }
+.lp-lock { position: absolute; top: 12px; right: 12px; font-size: 14px; opacity: 0.5; }
+
+/* ── WHO IS THIS FOR ── */
+.audience-section { background: linear-gradient(180deg, var(--bg) 0%, #0d1119 100%); }
+
+.audience-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-top: 56px;
+}
+
+.aud-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.25s;
+}
+.aud-card:hover { border-color: var(--border-teal); }
+
+.aud-persona { font-size: 28px; margin-bottom: 12px; }
+.aud-type { font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+.aud-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.65; }
+
+/* ── PRICING ── */
+.pricing-section { background: var(--bg); }
+
+.pricing-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 7px 16px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 48px;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.price-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px 26px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.price-card.featured {
+  border-color: var(--border-teal);
+  background: linear-gradient(160deg, rgba(29,158,117,0.05) 0%, var(--bg-card) 60%);
+}
+
+.price-card.featured::before {
+  content: 'COMING SOON';
+  position: absolute;
+  top: -1px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--purple);
+  color: white;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  padding: 4px 14px;
+  border-radius: 0 0 8px 8px;
+}
+
+.price-tier {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-tertiary);
+  margin-bottom: 10px;
+}
+
+.price-amount {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 38px;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.price-amount span { font-size: 16px; font-weight: 400; color: var(--text-secondary); }
+
+.price-billing {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+}
+
+.price-divider { height: 1px; background: var(--border); margin-bottom: 20px; }
+
+.price-features { display: flex; flex-direction: column; gap: 10px; flex: 1; margin-bottom: 28px; }
+
+.pf {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+.pf-check { color: var(--teal); flex-shrink: 0; margin-top: 1px; }
+.pf-lock { color: var(--text-tertiary); flex-shrink: 0; margin-top: 2px; font-size: 11px; }
+
+.price-btn {
+  display: block;
+  width: 100%;
+  padding: 13px;
+  border-radius: 10px;
+  border: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.2s;
+  margin-top: auto;
+}
+.price-btn.primary { background: var(--teal); color: white; }
+.price-btn.primary:hover { background: var(--teal-light); }
+.price-btn.outline { background: transparent; color: var(--text-secondary); border: 1px solid var(--border); }
+.price-btn.outline:hover { border-color: var(--border-teal); color: var(--text-primary); }
+.price-btn.waitlist { background: rgba(91,63,248,0.12); color: #9d8ffc; border: 1px solid var(--border-purple); }
+.price-btn.waitlist:hover { background: rgba(91,63,248,0.2); }
+
+/* ── FINAL CTA ── */
+.cta-section { background: linear-gradient(180deg, #0d1119 0%, var(--bg) 100%); text-align: center; }
+
+.cta-card {
+  max-width: 640px;
+  margin: 0 auto;
+  background: var(--bg-card);
+  border: 1px solid var(--border-teal);
+  border-radius: 28px;
+  padding: 72px 52px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-card::before {
+  content: '';
+  position: absolute;
+  top: -100px; left: 50%;
+  transform: translateX(-50%);
+  width: 500px; height: 400px;
+  background: radial-gradient(ellipse, rgba(29,158,117,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cta-headline {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.cta-sub {
+  font-size: 16px;
+  color: var(--text-secondary);
+  line-height: 1.68;
+  font-weight: 300;
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+.cta-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.gumroad-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--teal);
+  color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 16px 36px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+}
+.gumroad-btn:hover { background: var(--teal-light); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(29,158,117,0.3); }
+
+.play-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  padding: 14px 28px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.play-btn:hover { border-color: var(--border-teal); color: var(--text-primary); }
+
+.play-icon {
+  width: 24px; height: 24px;
+  background: white;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.cta-note {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-top: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 36px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-logo { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 18px; text-decoration: none; color: var(--text-primary); }
+.footer-logo span { color: var(--teal); }
+
+.footer-links { display: flex; gap: 24px; }
+.footer-links a { font-size: 13px; color: var(--text-tertiary); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: var(--text-secondary); }
+
+.footer-disclaimer {
+  width: 100%;
+  font-size: 11px;
+  color: var(--text-tertiary);
+  line-height: 1.65;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes scanLine {
+  0% { top: 0; opacity: 0; }
+  5% { opacity: 1; }
+  95% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { padding: 16px 20px; }
+  .nav-link { display: none; }
+
+  .problem-grid,
+  .explorer-grid,
+  .learn-intro { grid-template-columns: 1fr; gap: 36px; }
+
+  .features-grid { grid-template-columns: 1fr 1fr; }
+
+  .lesson-preview { grid-template-columns: 1fr 1fr; }
+
+  .pricing-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+
+  .audience-grid { grid-template-columns: 1fr; }
+
+  .float-tag { display: none; }
+
+  .phone-wrap { margin: 0 auto; }
+
+  section { padding: 64px 20px; }
+
+  .cta-card { padding: 40px 24px; }
+
+  footer { padding: 28px 20px; flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 600px) {
+  .features-grid { grid-template-columns: 1fr; }
+  .lesson-preview { grid-template-columns: 1fr; }
+  .hero-cta-group { flex-direction: column; align-items: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Know<span>vest</span></a>
+  <div class="nav-right">
+    <a href="#features" class="nav-link">Features</a>
+    <a href="#learn" class="nav-link">Learn Tab</a>
+    <a href="#pricing" class="nav-link">Pricing</a>
+    <a href="#waitlist" class="nav-cta">Get started →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+
+  <div class="hero-eyebrow">
+    <div class="eyebrow-dot"></div>
+    Built for expats investing in Japan
+  </div>
+
+  <h1 class="hero-headline">
+    <span class="hero-quote">"I want to invest."</span>
+    <span class="hero-quote">"But everything is in Japanese."</span>
+    <span class="hero-quote line2">"I don't even know where to start."</span>
+  </h1>
+
+  <p class="hero-jp">日本で投資したい。でも、何から始めればいい？</p>
+
+  <p class="hero-sub">
+    Sound familiar? Knowvest is the free app that teaches expats in Japan how to understand — and actually feel confident about — their investments. In plain English. No Japanese required.
+  </p>
+
+  <div class="hero-cta-group">
+    <a href="https://play.google.com/store/apps/details?id=YOUR_PACKAGE_NAME" class="btn-primary" target="_blank">
+      <span>▶</span> Download on Google Play
+    </a>
+    <a href="#waitlist" class="btn-ghost">Join the waitlist</a>
+  </div>
+
+  <!-- VIDEO -->
+  <div class="video-wrap">
+    <div class="video-container">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/aw99evcZY2o?rel=0&modestbranding=1&color=white"
+        title="Knowvest — Fund Explorer Demo"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROBLEM -->
+<section class="problem-section">
+  <div class="section-inner">
+    <div class="eyebrow reveal">Sound familiar?</div>
+    <h2 class="section-headline reveal">You're not alone.<br>This is what it actually feels like.</h2>
+    <p class="section-sub reveal">Thousands of expats in Japan are in the same position — wanting to invest, or already invested, but feeling completely in the dark. Here's what that looks like.</p>
+
+    <div class="problem-grid">
+      <div class="problem-list">
+        <div class="problem-item reveal" style="border-color:var(--border-teal);background:rgba(29,158,117,0.03)">
+          <div class="pi-icon">🤔</div>
+          <div>
+            <div class="pi-title">"I want to invest but I don't know where to start"</div>
+            <div class="pi-desc">You've heard NISA is a good idea. Everyone says so. But between the Japanese paperwork, the fund names, and the sheer number of options — you haven't taken the first step yet. That's exactly what Knowvest is for.</div>
+          </div>
+        </div>
+        <div class="problem-item reveal reveal-delay-1">
+          <div class="pi-icon">🈳</div>
+          <div>
+            <div class="pi-title">Your brokerage is entirely in Japanese</div>
+            <div class="pi-desc">SBI, Rakuten, Monex — beautiful apps, completely impenetrable without fluent Japanese.</div>
+          </div>
+        </div>
+        <div class="problem-item reveal reveal-delay-1">
+          <div class="pi-icon">📊</div>
+          <div>
+            <div class="pi-title">Fund names mean nothing to you</div>
+            <div class="pi-desc">"eMAXIS Slim 全世界株式" — is that good? Risky? You have no idea and nobody is explaining it in English.</div>
+          </div>
+        </div>
+        <div class="problem-item reveal reveal-delay-2">
+          <div class="pi-icon">📉</div>
+          <div>
+            <div class="pi-title">Markets drop and you panic</div>
+            <div class="pi-desc">When your portfolio turns red, you don't know if it's normal volatility or something serious.</div>
+          </div>
+        </div>
+        <div class="problem-item reveal reveal-delay-3">
+          <div class="pi-icon">🤷</div>
+          <div>
+            <div class="pi-title">You don't know what you don't know</div>
+            <div class="pi-desc">NISA quotas, Tsumitate vs Growth, expense ratios — there's a whole education nobody gave you.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="brokerage-mock reveal">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;">Your brokerage screen</div>
+        <div class="brokerage-inner">
+          <div class="brow">
+            <div>
+              <div class="brow-name">eMAXIS Slim 全世界株式</div>
+              <div class="brow-sub">三菱UFJ国際投信</div>
+            </div>
+            <div class="brow-val up">+2.3%</div>
+          </div>
+          <div class="brow">
+            <div>
+              <div class="brow-name">ニッセイ外国株式インデックス</div>
+              <div class="brow-sub">ニッセイAM</div>
+            </div>
+            <div class="brow-val dn">−0.8%</div>
+          </div>
+          <div class="brow">
+            <div>
+              <div class="brow-name">たわらノーロード先進国株式</div>
+              <div class="brow-sub">アセットマネジメントOne</div>
+            </div>
+            <div class="brow-val up">+1.1%</div>
+          </div>
+        </div>
+        <div class="confused-card">
+          <span>😰</span>
+          <span>"Wait... what do I actually own?"</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FUND EXPLORER -->
+<section class="explorer-section" id="features">
+  <div class="section-inner">
+    <div class="eyebrow reveal">MVP 1 — The Fund Explorer</div>
+    <h2 class="section-headline reveal">Point. Scan. Understand.</h2>
+    <p class="section-sub reveal">The core feature of Knowvest. Scan any fund from any source — brokerage screen, statement, brochure — and get a complete plain-English breakdown instantly. No Japanese required.</p>
+
+    <div class="explorer-grid">
+      <div class="step-list reveal">
+        <div class="step-item">
+          <div class="step-num">01</div>
+          <div>
+            <div class="step-title">Point your camera at any fund name</div>
+            <div class="step-desc">Japanese characters, English, mixed — the scanner handles everything. Works on screens, printouts, statements, anything.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">02</div>
+          <div>
+            <div class="step-title">Get the plain English breakdown instantly</div>
+            <div class="step-desc">What it is. What it holds. Which countries, which sectors. Whether it qualifies for NISA. In language you understand in 30 seconds.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">03</div>
+          <div>
+            <div class="step-title">See where it sits on the risk ladder</div>
+            <div class="step-desc">A 5-level visual ladder — Bank Savings to Crypto. No numbers to decode. Just instant, honest context about what you're getting into.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">04</div>
+          <div>
+            <div class="step-title">Run the Growth Simulator</div>
+            <div class="step-desc">Enter any amount and time horizon. See three historical scenarios. Not a prediction — a tool to understand what compound growth actually feels like.</div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">05</div>
+          <div>
+            <div class="step-title">Log it and track your NISA quota</div>
+            <div class="step-desc">Add the fund to your portfolio in one tap. Your annual NISA quota updates automatically. Know exactly how much room remains before December.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phone-wrap reveal">
+        <div class="float-tag tl">
+          <div class="ft-label">NISA Eligible</div>
+          <div class="ft-val">✓ Tsumitate</div>
+        </div>
+        <div class="float-tag br">
+          <div class="ft-label">Expense Ratio</div>
+          <div class="ft-val">0.058% / yr</div>
+        </div>
+
+        <div class="phone">
+          <div class="phone-inner">
+            <div class="m-header">Fund Explorer</div>
+            <div class="m-disclaimer">🟢 Educational only — not financial advice.</div>
+            <div class="m-fund-card">
+              <div class="m-fund-en">eMAXIS Slim All Country</div>
+              <div class="m-fund-jp">eMAXIS Slim 全世界株式（オール・カントリー）</div>
+              <div class="m-badges">
+                <span class="m-badge teal">Tsumitate NISA ✓</span>
+                <span class="m-badge amber">Stocks & Shares</span>
+              </div>
+            </div>
+            <div class="m-label">Simple Explanation</div>
+            <div class="m-desc">Tracks ~2,900 companies across 47 countries via the MSCI ACWI index. One of the lowest-cost funds available in Japan for long-term NISA investing.</div>
+            <div class="m-label">Geographical Breakdown</div>
+            <div class="m-row"><div class="m-row-label"><div class="m-dot" style="background:#60A5FA"></div>United States</div><div class="m-pct">63%</div></div>
+            <div class="m-row"><div class="m-row-label"><div class="m-dot" style="background:#34D399"></div>Japan</div><div class="m-pct">6%</div></div>
+            <div class="m-row"><div class="m-row-label"><div class="m-dot" style="background:#A78BFA"></div>United Kingdom</div><div class="m-pct">4%</div></div>
+            <div class="m-row"><div class="m-row-label"><div class="m-dot" style="background:#FCD34D"></div>Other</div><div class="m-pct">27%</div></div>
+            <div style="margin-top:10px;padding:9px 10px;background:rgba(29,158,117,0.07);border-radius:8px;border:1px solid rgba(29,158,117,0.16)">
+              <div style="font-size:8px;color:var(--teal);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:2px">Tracks</div>
+              <div style="font-size:9px;color:var(--text-secondary)">MSCI All Country World Index (ACWI)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FEATURES GRID -->
+<section class="features-section">
+  <div class="section-inner">
+    <div class="eyebrow reveal">Everything inside the app</div>
+    <h2 class="section-headline reveal">Every tool an expat investor in Japan actually needs.</h2>
+
+    <div class="features-grid">
+      <div class="feat-card reveal">
+        <span class="feat-icon">📸</span>
+        <div class="feat-title">Fund Scanner</div>
+        <div class="feat-desc">Point your camera at any fund name — Japanese or English — and get an instant plain-language explanation. Works on any screen, statement, or printout.</div>
+        <span class="feat-tag free">Free · 5 scans/month</span>
+      </div>
+      <div class="feat-card reveal reveal-delay-1">
+        <span class="feat-icon">📊</span>
+        <div class="feat-title">NISA Quota Tracker</div>
+        <div class="feat-desc">Track your annual Growth and Tsumitate NISA quota. Know exactly how much you've used and how much room you have before the December reset.</div>
+        <span class="feat-tag free">Free</span>
+      </div>
+      <div class="feat-card reveal reveal-delay-2">
+        <span class="feat-icon">📈</span>
+        <div class="feat-title">Growth Simulator</div>
+        <div class="feat-desc">Enter any amount and time horizon. See what compound growth looks like across three historical scenarios. Built to educate, not to predict.</div>
+        <span class="feat-tag free">Free</span>
+      </div>
+      <div class="feat-card reveal">
+        <span class="feat-icon">📚</span>
+        <div class="feat-title">56 FAQ Answers</div>
+        <div class="feat-desc">From "what is NISA?" to "what is the yen carry trade?" — every question an expat investor asks, answered in plain English without jargon.</div>
+        <span class="feat-tag free">Free</span>
+      </div>
+      <div class="feat-card reveal reveal-delay-1">
+        <span class="feat-icon">🌏</span>
+        <div class="feat-title">Crisis Insights</div>
+        <div class="feat-desc">When global events happen — trade tensions, yen volatility, central bank decisions — understand what history says about the impact on Japanese funds.</div>
+        <span class="feat-tag standard">Standard</span>
+      </div>
+      <div class="feat-card reveal reveal-delay-2">
+        <span class="feat-icon">🤖</span>
+        <div class="feat-title">Your Co-Pilot</div>
+        <div class="feat-desc">Ask anything about investing in Japan and get answers connected to what you actually own. Educates, contextualises, and calms — never advises.</div>
+        <span class="feat-tag premium">Premium</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- LEARN TAB -->
+<section class="learn-section" id="learn">
+  <div class="section-inner">
+    <div class="eyebrow reveal">MVP 2 — The Learn Tab</div>
+
+    <div class="learn-intro">
+      <div class="learn-levels reveal">
+        <div class="level-card locked">
+          <div class="level-pip" style="background:#1D9E75"></div>
+          <div class="level-info">
+            <div class="level-num">Level 1</div>
+            <div class="level-name">The Safety Net</div>
+            <div class="level-arc">Anxious → Stable and ready to invest</div>
+          </div>
+          <span class="level-status soon">🔒 Coming soon</span>
+        </div>
+        <div class="level-card locked">
+          <div class="level-pip" style="background:#378ADD"></div>
+          <div class="level-info">
+            <div class="level-num">Level 2</div>
+            <div class="level-name">The NISA Voyager</div>
+            <div class="level-arc">Confusion → Mastering asset allocation</div>
+          </div>
+          <span class="level-status soon">🔒 Coming soon</span>
+        </div>
+        <div class="level-card locked">
+          <div class="level-pip" style="background:#9B59B6"></div>
+          <div class="level-info">
+            <div class="level-num">Level 3</div>
+            <div class="level-name">The Market Zen</div>
+            <div class="level-arc">Reacting → Filtering signal from noise</div>
+          </div>
+          <span class="level-status soon">🔒 Coming soon</span>
+        </div>
+        <div class="level-card locked">
+          <div class="level-pip" style="background:#E24B4A"></div>
+          <div class="level-info">
+            <div class="level-num">Level 4</div>
+            <div class="level-name">The Strategic Analyst</div>
+            <div class="level-arc">Passive → Active, informed decision-maker</div>
+          </div>
+          <span class="level-status soon">🔒 Coming soon</span>
+        </div>
+
+        <div class="learn-cta-box">
+          <div class="lcb-icon">📬</div>
+          <div>
+            <div class="lcb-title">All 4 levels are in development</div>
+            <div class="lcb-desc">Join the waitlist and be the first to know when the Learn Tab launches. Free levels ship first.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="learn-right reveal">
+        <div class="eyebrow" style="margin-bottom:12px">Your investing education. Built in.</div>
+        <h2 class="section-headline" style="margin-bottom:16px">The Fund Explorer gets you started.<br><span style="color:var(--teal)">The Learn Tab takes you the rest of the way.</span></h2>
+        <p class="section-sub">A structured learning arc — 4 levels, 17 lessons. Each lesson has something to read and something to do. Not a course you forget. A companion that builds your confidence one day at a time.</p>
+      </div>
+    </div>
+
+    <!-- Lesson preview cards -->
+    <div class="lesson-preview reveal">
+      <div class="lp-card locked-card">
+        <div class="lp-lock">🔒</div>
+        <div class="lp-level">Level 1 · Free · Coming soon</div>
+        <div class="lp-title">The Safety Net</div>
+        <div class="lp-items">
+          <div class="lp-item">The Inflation Monster</div>
+          <div class="lp-item">The Fortress — 3-6 Month Rule</div>
+          <div class="lp-item">Risk vs. Gambling</div>
+          <div class="lp-item">Compound Interest Magic</div>
+        </div>
+      </div>
+      <div class="lp-card locked-card">
+        <div class="lp-lock">🔒</div>
+        <div class="lp-level">Level 2 · Free + Standard · Coming soon</div>
+        <div class="lp-title">The NISA Voyager</div>
+        <div class="lp-items">
+          <div class="lp-item">What a Fund Actually Is</div>
+          <div class="lp-item">The Hidden Thief — Fees</div>
+          <div class="lp-item">DCA and Tsumitate</div>
+          <div class="lp-item">NISA vs iDeCo</div>
+          <div class="lp-item">Your Investment Thesis</div>
+        </div>
+      </div>
+      <div class="lp-card locked-card">
+        <div class="lp-lock">🔒</div>
+        <div class="lp-level">Level 3 · Standard</div>
+        <div class="lp-title">The Market Zen</div>
+        <div class="lp-items">
+          <div class="lp-item">The USD/JPY Seesaw</div>
+          <div class="lp-item">Scandal vs. System</div>
+          <div class="lp-item">Safe Havens & Fear Index</div>
+          <div class="lp-item">Market Cycles</div>
+        </div>
+      </div>
+      <div class="lp-card locked-card">
+        <div class="lp-lock">🔒</div>
+        <div class="lp-level">Level 4 · Premium</div>
+        <div class="lp-title">The Strategic Analyst</div>
+        <div class="lp-items">
+          <div class="lp-item">P/E and P/B Ratios</div>
+          <div class="lp-item">ROE — Japan context</div>
+          <div class="lp-item">The Dividend Trap</div>
+          <div class="lp-item">Portfolio Drift</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHO IS THIS FOR -->
+<section class="audience-section">
+  <div class="section-inner">
+    <div class="eyebrow reveal">Who is Knowvest for?</div>
+    <h2 class="section-headline reveal">If you live in Japan<br>and invest here — this is for you.</h2>
+
+    <div class="audience-grid reveal">
+      <div class="aud-card">
+        <div class="aud-persona">🌏</div>
+        <div class="aud-type">The New Expat</div>
+        <div class="aud-desc">You just opened a NISA account because everyone said you should. You have no idea what you're invested in. Knowvest explains everything from scratch, in English, without making you feel stupid.</div>
+      </div>
+      <div class="aud-card">
+        <div class="aud-persona">📱</div>
+        <div class="aud-type">The Confused Intermediate</div>
+        <div class="aud-desc">You've been investing for a year or two but NISA quotas, expense ratios, and yen volatility still confuse you. The FAQ and Learn tab are built for exactly this stage.</div>
+      </div>
+      <div class="aud-card">
+        <div class="aud-persona">🏢</div>
+        <div class="aud-type">The Long-Term Resident</div>
+        <div class="aud-desc">You've been in Japan for years and want to take investing seriously. Crisis Insights and the Co-Pilot give you the analytical depth you're ready for.</div>
+      </div>
+      <div class="aud-card">
+        <div class="aud-persona">😰</div>
+        <div class="aud-type">The Anxious Investor</div>
+        <div class="aud-desc">Markets fell and you can't stop checking your portfolio. The Market Calm feature was built for exactly this moment. Historical data. No panic. Just steadiness.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <div class="section-inner">
+    <div class="eyebrow reveal">Pricing</div>
+    <h2 class="section-headline reveal">Start free.<br>Go deeper when you're ready.</h2>
+    <p class="section-sub reveal" style="margin-bottom:32px">The core tools are free to use. Paid tiers unlock deeper features — but the fundamentals never cost anything.</p>
+
+    <div class="pricing-grid reveal">
+      <!-- FREE -->
+      <div class="price-card">
+        <div class="price-tier">Free</div>
+        <div class="price-amount">¥0 <span>/ month</span></div>
+        <div class="price-billing">Core features, always free. No credit card.</div>
+        <div class="price-divider"></div>
+        <div class="price-features">
+          <div class="pf"><span class="pf-check">✓</span> 5 fund scans per month</div>
+          <div class="pf"><span class="pf-check">✓</span> NISA Quota Tracker</div>
+          <div class="pf"><span class="pf-check">✓</span> Growth Simulator</div>
+          <div class="pf"><span class="pf-check">✓</span> 56 FAQ answers</div>
+          <div class="pf"><span class="pf-check">✓</span> Daily Brief</div>
+          <div class="pf"><span class="pf-check">✓</span> Market Calm</div>
+          <div class="pf"><span class="pf-check">✓</span> Investor Archetype Quiz</div>
+          <div class="pf"><span class="pf-check">✓</span> Streak + Kabu earning</div>
+          <div class="pf"><span class="pf-lock">🔒</span> Learn Tab — Coming soon</div>
+        </div>
+        <a href="https://play.google.com/store/apps/details?id=YOUR_PACKAGE_NAME" class="price-btn primary" target="_blank">Download free →</a>
+      </div>
+
+      <!-- STANDARD -->
+      <div class="price-card featured">
+        <div class="price-tier">Standard</div>
+        <div class="price-amount">¥490 <span>/ month</span></div>
+        <div class="price-billing">¥4,900/year · ~2 months free</div>
+        <div class="price-divider"></div>
+        <div class="price-features">
+          <div class="pf"><span class="pf-check">✓</span> Everything in Free</div>
+          <div class="pf"><span class="pf-check">✓</span> Unlimited fund scans</div>
+          <div class="pf"><span class="pf-check">✓</span> Crisis Insights (World tab)</div>
+          <div class="pf"><span class="pf-check">✓</span> 90-day research history</div>
+          <div class="pf"><span class="pf-check">✓</span> XP bar + level visible</div>
+          <div class="pf"><span class="pf-check">✓</span> 30-day streak tracker</div>
+          <div class="pf"><span class="pf-check">✓</span> Kabu redemption for discounts</div>
+          <div class="pf"><span class="pf-check">✓</span> Co-Pilot — general mode</div>
+          <div class="pf"><span class="pf-lock">🔒</span> Learn Tab — Level 3 coming soon</div>
+        </div>
+        <a href="#waitlist" class="price-btn waitlist">Join Standard waitlist →</a>
+      </div>
+
+      <!-- PREMIUM -->
+      <div class="price-card">
+        <div class="price-tier">Premium</div>
+        <div class="price-amount">¥980 <span>/ month</span></div>
+        <div class="price-billing">¥9,800/year · ~2 months free</div>
+        <div class="price-divider"></div>
+        <div class="price-features">
+          <div class="pf"><span class="pf-check">✓</span> Everything in Standard</div>
+          <div class="pf"><span class="pf-check">✓</span> Portfolio Health Score</div>
+          <div class="pf"><span class="pf-check">✓</span> Co-Pilot — portfolio-aware</div>
+          <div class="pf"><span class="pf-check">✓</span> Badges + archetype titles</div>
+          <div class="pf"><span class="pf-check">✓</span> Unlimited Rest Days</div>
+          <div class="pf"><span class="pf-check">✓</span> ×3 Kabu multiplier</div>
+          <div class="pf"><span class="pf-check">✓</span> Crisis deep-dive reports</div>
+          <div class="pf"><span class="pf-lock">🔒</span> Learn Tab — Level 4 coming soon</div>
+        </div>
+        <a href="#waitlist" class="price-btn outline">Join Premium waitlist →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FINAL CTA -->
+<section class="cta-section" id="waitlist">
+  <div class="cta-card reveal">
+    <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);margin-bottom:20px;position:relative;z-index:1;">Your NISA deserves to be understood</div>
+    <div class="cta-headline">
+      Start learning.<br>
+      <span style="color:var(--teal)">Start today. Free.</span>
+    </div>
+    <p class="cta-sub">
+      Download free and understand your first fund in under 60 seconds.<br>
+      No Japanese required. No financial background needed.
+    </p>
+    <div class="cta-buttons">
+      <!-- GOOGLE PLAY BUTTON -->
+      <a href="https://play.google.com/store/apps/details?id=YOUR_PACKAGE_NAME" class="gumroad-btn" target="_blank">
+        <div class="play-icon">▶</div>
+        Download on Google Play — Free
+      </a>
+      <!-- WAITLIST BUTTON — Replace href with your Gumroad waitlist URL -->
+      <a href="YOUR_GUMROAD_WAITLIST_URL" class="play-btn" target="_blank">
+        Join the Standard waitlist →
+      </a>
+    </div>
+    <div class="cta-note">Free to download. No credit card. Available on Android — iOS coming soon.</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">Know<span>vest</span></a>
+  <div class="footer-links">
+    <a href="https://japanavifinance-jpg.github.io/knowvest-legal/privacy-policy.html" target="_blank">Privacy Policy</a>
+    <a href="https://japanavifinance-jpg.github.io/knowvest-legal/privacy-policy.html#s14" target="_blank">Terms of Service</a>
+    <a href="mailto:knowvest.support@gmail.com">Support</a>
+  </div>
+  <div class="footer-disclaimer">
+    Knowvest is an educational tool and is not a licensed financial advisor. All content is for informational and educational purposes only. Nothing in this app or website constitutes financial advice, investment recommendations, or solicitation to buy or sell any financial instrument. Investment decisions are entirely the responsibility of the user. Historical data shown is for illustrative purposes only and does not guarantee future results. Knowvest is not regulated under Japan's Financial Instruments and Exchange Act (FIEA).
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// Smooth nav highlight
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 120) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.style.color = a.getAttribute('href') === '#' + current
+      ? 'var(--teal)'
+      : 'var(--text-secondary)';
+  });
+});
+</script>
+
+</body>
+</html>
